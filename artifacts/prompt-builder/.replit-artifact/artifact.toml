@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "AI Prompt Builder"
+version = "1.0.0"
+id = "artifacts/prompt-builder"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22780
+
+[services.development]
+run = "pnpm --filter @workspace/prompt-builder run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/prompt-builder", "run", "build" ]
+publicDir = "artifacts/prompt-builder/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22780"
+BASE_PATH = "/"
